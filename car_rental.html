@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderWave Car and Bike Rental</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc70cf;
+            --accent-color: #e74c3c;
+            --text-color: #34495e;
+            --light-bg: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand img {
+            height: 100px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.1);
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--text-color) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .carousel-item {
+            height: 100vh;
+            min-height: 300px;
+            background: no-repeat center center scroll;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .carousel-caption {
+            bottom: 270px;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .carousel-caption h5 {
+            font-size: 45px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 25px;
+        }
+
+        .carousel-caption p {
+            width: 60%;
+            margin: auto;
+            font-size: 18px;
+            line-height: 1.9;
+        }
+
+        .carousel-inner::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .car-card, .bike-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .car-card:hover, .bike-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-card img, .bike-card img {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .car-card:hover img, .bike-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: all 0.3s ease;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color) !important;
+        }
+
+        .video-section {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+
+        .video-container {
+            max-width: 100%;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+        }
+
+        #bg-video {
+             position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90%;
+            object-fit: cover;
+        }
+
+        .video-section h2 {
+            margin-bottom: 40px;
+            color: var(--text-color);
+            font-weight: bold;
+        }
+        .dropdown-toggle {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .btn-secondary {
+            background-color: #2ecc70cf;
+            border-color: #2ecc70cf;
+            color: white;
+        }
+
+        .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
+            background-color: #27ae60;
+            border-color: #27ae60;
+            color: white;
+        }
+
+        .dropdown-toggle {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body .btn-primary {
+            margin-top: auto;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: #2ecc70cf;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body .btn-primary {
+            margin-top: auto;
+        }
+
+        #booking {
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .footer {
+            background-image: linear-gradient(to right, #0f1615, #1a2928);
+            color: #FFFFFF;
+            padding: 50px 0 25px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            flex: 1;
+            margin-bottom: 20px;
+            min-width: 200px;
+        }
+
+        .footer-section h4 {
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+
+        .footer-section a {
+            color: #FFFFFF;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .footer-section a:hover {
+            color: #285f51;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background-color: #FFFFFF;
+            color: #14141F;
+            text-align: center;
+            line-height: 35px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .social-links a:hover {
+            background-color: #285f51;
+            color: #FFFFFF;
+        }
+
+        .Gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 8px; 
+            margin-top: 10px;
+        }
+        .Gallery img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover; 
+        }
+
+        .footer-menu {
+            margin-top: 10px;
+        }
+
+        .footer-menu a {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-menu a:hover {
+            color: #285f51;
+        }
+
+        .footer-section-newsletter {
+            margin-left: 50px;
+        }
+
+        #bikes {
+            background-color: #f8f9fa;
+        }
+
+        .bike-card .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .bike-card .card-title {
+            color: var(--primary-color);
+        }
+
+        .bike-card .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .bike-card .btn-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+            }
+
+            .footer-section {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="logo.png" alt="WanderWave Logo"> WanderWave</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#cars">Car Rental</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#bikes">Bike Rental</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#booking">Book Now</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#login">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--Hero Section(Carousel) -->
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('https://images.pexels.com/photos/3989923/pexels-photo-3989923.jpeg?auto=compress&cs=tinysrgb&w=800')">
+                <div class="carousel-caption">
+                    <h5>Find Your Perfect Ride</h5>
+                    <p>Explore our wide range of vehicles for your next adventure</p>
+                    <a href="#cars" class="btn btn-primary mt-3">View Cars</a>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://images.pexels.com/photos/3935702/pexels-photo-3935702.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')">
+                <div class="carousel-caption">
+                    <h5>Two-Wheel Adventures</h5>
+                    <p>Discover the joy of cycling with our bike rentals</p>
+                    <a href="#bikes" class="btn btn-primary mt-3">View Bikes</a>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://images.pexels.com/photos/28316230/pexels-photo-28316230/free-photo-of-a-black-truck-parked-in-the-woods-next-to-a-white-car.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')">
+                <div class="carousel-caption">
+                    <h5>City Cruising</h5>
+                    <p>Navigate urban landscapes with style and comfort</p>
+                    <a href="#about" class="btn btn-primary mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Car Selection Section -->
+<section id="cars" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Choose Your Car</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card car-card">
+                    <img src="defender.jpeg" class="card-img-top" alt="Off-road Vehicle">
+                    <div class="card-body">
+                        <h5 class="card-title">Off-road Adventure</h5>
+                        <p class="card-text">Perfect for rugged terrains and off-beaten paths.</p>
+                        <div class="dropdown mb-3">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="offRoadDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Model
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="offRoadDropdown">
+                                <li><a class="dropdown-item" href="#">Land Rover Defender</a></li>
+                                <li><a class="dropdown-item" href="#">Jeep Wrangler</a></li>
+                                <li><a class="dropdown-item" href="#">Mercedes-Benz G-Class</a></li>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn btn-primary">Rent Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card car-card">
+                    <img src="maybach.jpeg" class="card-img-top" alt="Luxury Car">
+                    <div class="card-body">
+                        <h5 class="card-title">Luxury Experience</h5>
+                        <p class="card-text">Travel in style with our premium luxury vehicles.</p>
+                        <div class="dropdown mb-3">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="luxuryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Model
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="luxuryDropdown">
+                                <li><a class="dropdown-item" href="#">Mercedes-Benz S-Class</a></li>
+                                <li><a class="dropdown-item" href="#">BMW 7 Series</a></li>
+                                <li><a class="dropdown-item" href="#">Audi A8</a></li>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn btn-primary">Rent Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card car-card">
+                    <img src="Fortuner.jpeg" class="card-img-top" alt="Economy Car">
+                    <div class="card-body">
+                        <h5 class="card-title">Economy Comfort</h5>
+                        <p class="card-text">Efficient and comfortable for your daily commutes.</p>
+                        <div class="dropdown mb-3">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="economyDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Model
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="economyDropdown">
+                                <li><a class="dropdown-item" href="#">Toyota Land Cruiser</a></li>
+                                <li><a class="dropdown-item" href="#">Ford Everest</a></li>
+                                <li><a class="dropdown-item" href="#">Pajero Sport</a></li>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn btn-primary">Rent Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bike Rental Section -->
+<section id="bikes" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Explore on Two Wheels</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card bike-card">
+                    <img src="https://img.indianautosblog.com/2021/02/19/hero-xpulse-200-touring-setup-8ee4.jpg" class="card-img-top" alt="Mountain Bike">
+                    <div class="card-body">
+                        <h5 class="card-title">Adventure Bike</h5>
+                        <p class="card-text">Perfect for off-road adventures and trail riding.</p>
+                        <div class="dropdown mb-3">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="adventureBikeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Model
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="adventureBikeDropdown">
+                                <li><a class="dropdown-item" href="#">Hero Xpulse 200</a></li>
+                                <li><a class="dropdown-item" href="#">Royal Enfield Himalayan</a></li>
+                                <li><a class="dropdown-item" href="#">KTM 390 Adventure</a></li>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn btn-primary">Rent Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card bike-card">
+                    <img src="daksh_bike.jpeg" class="card-img-top" alt="City Bike">
+                    <div class="card-body">
+                        <h5 class="card-title">City Bike</h5>
+                        <p class="card-text">Comfortable and efficient for urban exploration.</p>
+                        <div class="dropdown mb-3">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="cityBikeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Model
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="cityBikeDropdown">
+                                <li><a class="dropdown-item" href="#">Honda CB Shine</a></li>
+                                <li><a class="dropdown-item" href="#">Bajaj Pulsar 125</a></li>
+                                <li><a class="dropdown-item" href="#">TVS Apache RTR 160</a></li>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn btn-primary">Rent Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card bike-card">
+                    <img src="https://images.pexels.com/photos/15020564/pexels-photo-15020564/free-photo-of-two-people-riding-electric-bicycles.jpeg?auto=compress&cs=tinysrgb&w=800" class="card-img-top" alt="Electric Bike">
+                    <div class="card-body">
+                        <h5 class="card-title">Electric Bike</h5>
+                        <p class="card-text">Effortless ride with electric for longer journeys.</p>
+                        <div class="dropdown mb-3">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="electricBikeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Model
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="electricBikeDropdown">
+                                <li><a class="dropdown-item" href="#">Ather 450X</a></li>
+                                <li><a class="dropdown-item" href="#">Ola S1 Pro</a></li>
+                                <li><a class="dropdown-item" href="#">TVS iQube</a></li>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn btn-primary">Rent Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!--Video Section -->
+    <section id="about" class="video-section">
+        <div class="container">
+            <h2 class="text-center mb-4">Experience the Journey</h2>
+            <div class="video-container">
+                <video autoplay muted loop id="bg-video">
+                    <source src="rental.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form Section -->
+    <section id="booking" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Book Your Ride</h2>
+            <form>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="pickupDate" class="form-label">Pickup Date</label>
+                        <input type="date" class="form-control" id="pickupDate" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="returnDate" class="form-label">Return Date</label>
+                        <input type="date" class="form-control" id="returnDate" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="vehicleType" class="form-label">Vehicle Type</label>
+                        <select class="form-select" id="vehicleType" required>
+                            <option value="">Choose...</option>
+                            <option>Car - Off-road</option>
+                            <option>Car - Luxury</option>
+                            <option>Car - Economy</option>
+                            <option>Bike - Mountain</option>
+                            <option>Bike - City</option>
+                            <option>Bike - Electric</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="location" class="form-label">Pickup Location</label>
+                        <input type="text" class="form-control" id="location" placeholder="Enter city" required>
+                    </div>
+                    <div class="col-12">
+                        <center><button type="submit" class="btn btn-primary">Book Now</button></center>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="">About Us</a>
+                    <a href="">Contact Us</a>
+                    <a href="">Privacy Policy</a>
+                    <a href="">Terms & Condition</a>
+                    <a href="">FAQs & Help</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Chandigarh, India</p>
+                    <p>0001000169</p>
+                    <p>WanderWave@gmail.com</p>
+                    <div class="social-links">
+                        <a href=""><i class="fab fa-twitter"></i></a>
+                        <a href=""><i class="fab fa-facebook-f"></i></a>
+                        <a href=""><i class="fab fa-youtube"></i></a>
+                        <a href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Gallery</h4>
+                    <div class="Gallery">
+                        <img src="destination-1.jpg" alt="Destination 1">
+                        <img src="destination-2.jpg" alt="Destination 2">
+                        <img src="destination-3.jpg" alt="Destination 3">
+                        <img src="destination-4.jpg" alt="Destination 4">
+                        <img src="destination-1.jpg" alt="Destination 5">
+                        <img src="destination-3.jpg" alt="Destination 6">
+                    </div>
+                </div>
+                <div class="footer-section-newsletter">
+                    <h4>Newsletter</h4>
+                    <p>Sign up for our newsletter to get the latest updates.</p>
+                    <form>
+                        <input type="email" placeholder="Your email" style="width: 100%; padding: 10px; margin-top: 10px;">
+                        <button type="submit" style="width: 100%; padding: 10px; margin-top: 10px; background-color: #28ac97; color: #FFFFFF; border: none; cursor: pointer;">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
