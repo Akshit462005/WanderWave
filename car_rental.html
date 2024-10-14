@@ -343,6 +343,54 @@
                 margin-bottom: 30px;
             }
         }
+
+        /* Cart Modal Styles */
+        #cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .cart-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #eee;
+            padding: 1rem 0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        #cart-icon {
+            position: relative;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+        }
     </style>
 </head>
 <body>
@@ -355,11 +403,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#carouselExampleCaptions">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#cars">Car Rental</a></li>
                     <li class="nav-item"><a class="nav-link" href="#bikes">Bike Rental</a></li>
                     <li class="nav-item"><a class="nav-link" href="#booking">Book Now</a></li>
-                    <li class="nav-item"><a class="nav-link" href="login_page.html">LogOut</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cart-count" style="display: none;">0</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -387,7 +441,7 @@
                     <a href="#bikes" class="btn btn-primary mt-3">View Bikes</a>
                 </div>
             </div>
-            <div class="carousel-item" style="background-image: url('https://images.pexels.com/photos/28316230/pexels-photo-28316230/free-photo-of-a-black-truck-parked-in-the-woods-next-to-a-white-car.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')">
+            <div class="carousel-item" style="background-image:  url('https://images.pexels.com/photos/28316230/pexels-photo-28316230/free-photo-of-a-black-truck-parked-in-the-woods-next-to-a-white-car.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')">
                 <div class="carousel-caption">
                     <h5>City Cruising</h5>
                     <p>Navigate urban landscapes with style and comfort</p>
@@ -406,142 +460,142 @@
     </div>
 
     <!-- Car Selection Section -->
-<section id="cars" class="py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">Choose Your Car</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card car-card">
-                    <img src="defender.jpeg" class="card-img-top" alt="Off-road Vehicle">
-                    <div class="card-body">
-                        <h5 class="card-title">Off-road Adventure</h5>
-                        <p class="card-text">Perfect for rugged terrains and off-beaten paths.</p>
-                        <div class="dropdown mb-3">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="offRoadDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                Select Model
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="offRoadDropdown">
-                                <li><a class="dropdown-item" href="#">Land Rover Defender</a></li>
-                                <li><a class="dropdown-item" href="#">Jeep Wrangler</a></li>
-                                <li><a class="dropdown-item" href="#">Mercedes-Benz G-Class</a></li>
-                            </ul>
+    <section id="cars" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Choose Your Car</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card car-card" data-id="1" data-type="car">
+                        <img src="defender.jpeg" class="card-img-top" alt="Off-road Vehicle">
+                        <div class="card-body">
+                            <h5 class="card-title">Off-road Adventure</h5>
+                            <p class="card-text">Perfect for rugged terrains and off-beaten paths.</p>
+                            <div class="dropdown mb-3">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="offRoadDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select Model
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="offRoadDropdown">
+                                    <li><a class="dropdown-item" href="#">Land Rover Defender</a></li>
+                                    <li><a class="dropdown-item" href="#">Jeep Wrangler</a></li>
+                                    <li><a class="dropdown-item" href="#">Mercedes-Benz G-Class</a></li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn btn-primary rent-now" data-price="200">Rent Now</a>
                         </div>
-                        <a href="#" class="btn btn-primary">Rent Now</a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card car-card">
-                    <img src="maybach.jpeg" class="card-img-top" alt="Luxury Car">
-                    <div class="card-body">
-                        <h5 class="card-title">Luxury Experience</h5>
-                        <p class="card-text">Travel in style with our premium luxury vehicles.</p>
-                        <div class="dropdown mb-3">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="luxuryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                Select Model
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="luxuryDropdown">
-                                <li><a class="dropdown-item" href="#">Mercedes-Benz S-Class</a></li>
-                                <li><a class="dropdown-item" href="#">BMW 7 Series</a></li>
-                                <li><a class="dropdown-item" href="#">Audi A8</a></li>
-                            </ul>
+                <div class="col-md-4 mb-4">
+                    <div class="card car-card" data-id="2" data-type="car">
+                        <img src="maybach.jpeg" class="card-img-top" alt="Luxury Car">
+                        <div class="card-body">
+                            <h5 class="card-title">Luxury Experience</h5>
+                            <p class="card-text">Travel in style with our premium luxury vehicles.</p>
+                            <div class="dropdown mb-3">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="luxuryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select Model
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="luxuryDropdown">
+                                    <li><a class="dropdown-item" href="#">Mercedes-Benz S-Class</a></li>
+                                    <li><a class="dropdown-item" href="#">BMW 7 Series</a></li>
+                                    <li><a class="dropdown-item" href="#">Audi A8</a></li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn btn-primary rent-now" data-price="300">Rent Now</a>
                         </div>
-                        <a href="#" class="btn btn-primary">Rent Now</a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card car-card">
-                    <img src="Fortuner.jpeg" class="card-img-top" alt="Economy Car">
-                    <div class="card-body">
-                        <h5 class="card-title">Economy Comfort</h5>
-                        <p class="card-text">Efficient and comfortable for your daily commutes.</p>
-                        <div class="dropdown mb-3">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="economyDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                Select Model
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="economyDropdown">
-                                <li><a class="dropdown-item" href="#">Toyota Land Cruiser</a></li>
-                                <li><a class="dropdown-item" href="#">Ford Everest</a></li>
-                                <li><a class="dropdown-item" href="#">Pajero Sport</a></li>
-                            </ul>
+                <div class="col-md-4 mb-4">
+                    <div class="card car-card" data-id="3" data-type="car">
+                        <img src="Fortuner.jpeg" class="card-img-top" alt="Economy Car">
+                        <div class="card-body">
+                            <h5 class="card-title">Economy Comfort</h5>
+                            <p class="card-text">Efficient and comfortable for your daily commutes.</p>
+                            <div class="dropdown mb-3">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="economyDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select Model
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="economyDropdown">
+                                    <li><a class="dropdown-item" href="#">Toyota Land Cruiser</a></li>
+                                    <li><a class="dropdown-item" href="#">Ford Everest</a></li>
+                                    <li><a class="dropdown-item" href="#">Pajero Sport</a></li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn btn-primary rent-now" data-price="100">Rent Now</a>
                         </div>
-                        <a href="#" class="btn btn-primary">Rent Now</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Bike Rental Section -->
-<section id="bikes" class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-4">Explore on Two Wheels</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card bike-card">
-                    <img src="https://img.indianautosblog.com/2021/02/19/hero-xpulse-200-touring-setup-8ee4.jpg" class="card-img-top" alt="Mountain Bike">
-                    <div class="card-body">
-                        <h5 class="card-title">Adventure Bike</h5>
-                        <p class="card-text">Perfect for off-road adventures and trail riding.</p>
-                        <div class="dropdown mb-3">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="adventureBikeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                Select Model
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="adventureBikeDropdown">
-                                <li><a class="dropdown-item" href="#">Hero Xpulse 200</a></li>
-                                <li><a class="dropdown-item" href="#">Royal Enfield Himalayan</a></li>
-                                <li><a class="dropdown-item" href="#">KTM 390 Adventure</a></li>
-                            </ul>
+    <!-- Bike Rental Section -->
+    <section id="bikes" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Explore on Two Wheels</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card bike-card" data-id="4" data-type="bike">
+                        <img src="https://img.indianautosblog.com/2021/02/19/hero-xpulse-200-touring-setup-8ee4.jpg" class="card-img-top" alt="Mountain Bike">
+                        <div class="card-body">
+                            <h5 class="card-title">Adventure Bike</h5>
+                            <p class="card-text">Perfect for off-road adventures and trail riding.</p>
+                            <div class="dropdown mb-3">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="adventureBikeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select Model
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="adventureBikeDropdown">
+                                    <li><a class="dropdown-item" href="#">Hero Xpulse 200</a></li>
+                                    <li><a class="dropdown-item" href="#">Royal Enfield Himalayan</a></li>
+                                    <li><a class="dropdown-item" href="#">KTM 390 Adventure</a></li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn btn-primary rent-now" data-price="50">Rent Now</a>
                         </div>
-                        <a href="#" class="btn btn-primary">Rent Now</a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card bike-card">
-                    <img src="daksh_bike.jpeg" class="card-img-top" alt="City Bike">
-                    <div class="card-body">
-                        <h5 class="card-title">City Bike</h5>
-                        <p class="card-text">Comfortable and efficient for urban exploration.</p>
-                        <div class="dropdown mb-3">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="cityBikeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                Select Model
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="cityBikeDropdown">
-                                <li><a class="dropdown-item" href="#">Honda CB Shine</a></li>
-                                <li><a class="dropdown-item" href="#">Bajaj Pulsar 125</a></li>
-                                <li><a class="dropdown-item" href="#">TVS Apache RTR 160</a></li>
-                            </ul>
+                <div class="col-md-4 mb-4">
+                    <div class="card bike-card" data-id="5" data-type="bike">
+                        <img src="daksh_bike.jpeg" class="card-img-top" alt="City Bike">
+                        <div class="card-body">
+                            <h5 class="card-title">City Bike</h5>
+                            <p class="card-text">Comfortable and efficient for urban exploration.</p>
+                            <div class="dropdown mb-3">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="cityBikeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select Model
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="cityBikeDropdown">
+                                    <li><a class="dropdown-item" href="#">Honda CB Shine</a></li>
+                                    <li><a class="dropdown-item" href="#">Bajaj Pulsar 125</a></li>
+                                    <li><a class="dropdown-item" href="#">TVS Apache RTR 160</a></li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn btn-primary rent-now" data-price="30">Rent Now</a>
                         </div>
-                        <a href="#" class="btn btn-primary">Rent Now</a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card bike-card">
-                    <img src="https://images.pexels.com/photos/15020564/pexels-photo-15020564/free-photo-of-two-people-riding-electric-bicycles.jpeg?auto=compress&cs=tinysrgb&w=800" class="card-img-top" alt="Electric Bike">
-                    <div class="card-body">
-                        <h5 class="card-title">Electric Bike</h5>
-                        <p class="card-text">Effortless ride with electric for longer journeys.</p>
-                        <div class="dropdown mb-3">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="electricBikeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                Select Model
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="electricBikeDropdown">
-                                <li><a class="dropdown-item" href="#">Ather 450X</a></li>
-                                <li><a class="dropdown-item" href="#">Ola S1 Pro</a></li>
-                                <li><a class="dropdown-item" href="#">TVS iQube</a></li>
-                            </ul>
+                <div class="col-md-4 mb-4">
+                    <div class="card bike-card" data-id="6" data-type="bike">
+                        <img src="https://images.pexels.com/photos/15020564/pexels-photo-15020564/free-photo-of-two-people-riding-electric-bicycles.jpeg?auto=compress&cs=tinysrgb&w=800" class="card-img-top" alt="Electric Bike">
+                        <div class="card-body">
+                            <h5 class="card-title">Electric Bike</h5>
+                            <p class="card-text">Effortless ride with electric for longer journeys.</p>
+                            <div class="dropdown mb-3">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="electricBikeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select Model
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="electricBikeDropdown">
+                                    <li><a class="dropdown-item" href="#">Ather 450X</a></li>
+                                    <li><a class="dropdown-item" href="#">Ola S1 Pro</a></li>
+                                    <li><a class="dropdown-item" href="#">TVS iQube</a></li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn btn-primary rent-now" data-price="40">Rent Now</a>
                         </div>
-                        <a href="#" class="btn btn-primary">Rent Now</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!--Video Section -->
     <section id="about" class="video-section">
@@ -618,16 +672,16 @@
                         <a href=""><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
-                 <div class="footer-section">
-                <h4>Gallery</h4>
-                <div class="Gallery">
-                <img src="gallery1.jpeg" width="100px" height="100px">
-                <img src="gallery2.jpeg" width="100px" height="100px">
-                <img src="gallery3.jpeg" width="100px" height="100px">
-                <img src="gallery4.jpeg" width="100px" height="100px">
-                <img src="gallery5.jpeg" width="100px" height="100px">
-                <img src="gallery6.jpeg" width="100px" height="100px">
-            </div>
+                <div class="footer-section">
+                    <h4>Gallery</h4>
+                    <div class="Gallery">
+                        <img src="destination-1.jpg" alt="Destination 1">
+                        <img src="destination-2.jpg" alt="Destination 2">
+                        <img src="destination-3.jpg" alt="Destination 3">
+                        <img src="destination-4.jpg" alt="Destination 4">
+                        <img src="destination-1.jpg" alt="Destination 5">
+                        <img src="destination-3.jpg" alt="Destination 6">
+                    </div>
                 </div>
                 <div class="footer-section-newsletter">
                     <h4>Newsletter</h4>
@@ -640,8 +694,141 @@
             </div>
         </div>
     </footer>
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="cart-content">
+            <h2>Your Cart <span class="close">&times;</span></h2>
+            <div id="cart-items"></div>
+            <div id="cart-summary"></div>
+            <div id="cart-total"></div>
+            <button id="checkout-btn" class="btn btn-primary">Proceed to Checkout</button>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Cart functionality
+        let cart = [];
+        const cartIcon = document.getElementById('cart-icon');
+        const cartCount = document.getElementById('cart-count');
+        const cartModal = document.getElementById('cart-modal');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const closeBtn = document.querySelector('.close');
+
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const dropdownButton = e.target.closest('.dropdown').querySelector('.dropdown-toggle');
+            dropdownButton.textContent = e.target.textContent;
+        });
+    });
+
+        // Add to cart
+        document.querySelectorAll('.rent-now').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const card = e.target.closest('.card');
+                const id = card.dataset.id;
+                const type = card.dataset.type;
+                const name = card.querySelector('.card-title').textContent;
+                const price = parseFloat(e.target.dataset.price);
+                const model = card.querySelector('.dropdown-toggle').textContent.trim();
+
+                addToCart(id, type, name, price, model);
+                updateCartIcon();
+            });
+        });
+
+        function addToCart(id, type, name, price, model) {
+            const existingItem = cart.find(item => item.id === id && item.model === model);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ id, type, name, price, model, quantity: 1 });
+            }
+        }
+
+        function updateCartIcon() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'inline' : 'none';
+        }
+
+        // Open cart modal
+        cartIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            updateCartModal();
+            cartModal.style.display = 'flex';
+        });
+
+        // Close cart modal
+        closeBtn.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.style.display = 'none';
+            }
+        });
+
+        function updateCartModal() {
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `
+                    <h4>${item.name} (${item.model})</h4>
+                    <p>Price: $${item.price.toFixed(2)} x ${item.quantity}</p>
+                    <p>Total: $${itemTotal.toFixed(2)}</p>
+                    <button class="remove-item" data-id="${item.id}" data-model="${item.model}">Remove</button>
+                `;
+                cartItems.appendChild(itemElement);
+            });
+
+            cartTotal.textContent = Total: $${total.toFixed(2)};
+
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', removeFromCart);
+            });
+        }
+
+        function removeFromCart(e) {
+            const id = e.target.dataset.id;
+            const model = e.target.dataset.model;
+            cart = cart.filter(item => !(item.id === id && item.model === model));
+            updateCartModal();
+            updateCartIcon();
+        }
+
+        // Checkout functionality
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            // Here you would typically send the cart data to a server
+            // For this example, we'll just log it and clear the cart
+            console.log('Checkout:', cart);
+            alert('Thank you for your order!');
+            cart = [];
+            updateCartModal();
+            updateCartIcon();
+            cartModal.style.display = 'none';
+        });
+
+        // Initialize cart icon
+        updateCartIcon();
+    </script>
 </body>
 </html>
