@@ -8,6 +8,155 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <header>
+    <style>
+        .weather-navbar {
+            background: linear-gradient(135deg, #28ac97 0%, #1a7a6b 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .weather-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .weather-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+        }
+        
+        .weather-brand i {
+            font-size: 1.5rem;
+        }
+        
+        .weather-brand span {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .weather-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        #weatherForm {
+            flex: 1;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .search-container {
+            flex: 1;
+            position: relative;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        #location {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        #location:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+        
+        #weatherForm button {
+            background: white;
+            color: #28ac97;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #weatherForm button:hover {
+            background: #f0f0f0;
+            transform: translateY(-1px);
+        }
+        
+        #weatherDisplay {
+            min-width: 200px;
+            color: white;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .weather-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .weather-icon {
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .weather-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .weather-content {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            #weatherForm {
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            #weatherDisplay {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+        }
+        .weather-navbar input {
+                color: black; 
+                background-color: white; 
+                border: 1px solid #ccc; 
+        }
+
+        .weather-navbar input::placeholder {
+            color: #888;
+        }
+
+        </style>
 <div class="top-bar">
         <div class="container">
             <div class="contact-info">
@@ -49,6 +198,34 @@
             <a href="login_page.html" class="btn btn-primary">Book Now</a>
         </div>
     </nav>
+
+    <!-- Weather Navbar -->
+<nav class="weather-navbar">
+    <div class="weather-container">
+        <div class="weather-brand">
+            <i class="fas fa-cloud-sun"></i>
+            <span>Weather</span>
+        </div>
+        <div class="weather-content">
+            <form id="weatherForm">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input 
+                        type="text" 
+                        id="location" 
+                        placeholder="Check weather at your destination..."
+                        required>
+                </div>
+                <button type="submit">
+                    <i class="fas fa-paper-plane"></i>
+                    Check Weather
+                </button>
+            </form>
+            <div id="weatherDisplay"></div>
+        </div>
+    </div>
+</nav>
+
 </header>
 <body>
     <div class="hero-header" style="background-image: url(background.jpg);">
@@ -323,9 +500,153 @@
 
 <script>
     document.querySelector('.navbar-toggle').addEventListener('click', function() {
-    document.querySelector('.navbar-nav').classList.toggle('active');
-});
+        document.querySelector('.navbar-nav').classList.toggle('active');
+    });
 </script>
+
+<!-- Chatbot Configuration Script -->
+<!-- <script>
+    window.embeddedChatbotConfig = {
+        chatbotId: "bDflqA5ObVrRCBk-RsLgM",
+        domain: "www.chatbase.co",
+        theme: {
+            chatInputPlaceHolder: "Ask me anything about travel!",
+            chatbotReplyBackground: "#f0f0f0",
+            chatbotHeaderBackgroundColor: "#28ac97",
+            userReplyBackground: "#28ac97",
+            userReplyTextColor: "#fff"
+        }
+    }
+</script> -->
+
+<!-- Chatbot Embed Script -->
+<!-- <script 
+    src="https://www.chatbase.co/embed.min.js" 
+    chatbotId="bDflqA5ObVrRCBk-RsLgM" 
+    domain="www.chatbase.co">
+</script> -->
+
+<!-- Weather API Script -->
+<script>
+    const weatherForm = document.getElementById('weatherForm');
+    const locationInput = document.getElementById('location');
+    const weatherDisplay = document.getElementById('weatherDisplay');
+
+    weatherForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const location = locationInput.value.trim();
+        
+        if (!location) {
+            weatherDisplay.innerHTML = '<p style="color: #fff;">Please enter a location</p>';
+            return;
+        }
+
+        try {
+            // Fetch coordinates from location name
+            const geoResponse = await fetch(
+                `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(location)}&count=1&language=en&format=json`
+            );
+            const geoData = await geoResponse.json();
+
+            if (!geoData.results || geoData.results.length === 0) {
+                weatherDisplay.innerHTML = '<p style="color: #fff;">Location not found</p>';
+                return;
+            }
+
+            const { latitude, longitude, name, country } = geoData.results[0];
+
+            // Fetch weather data
+            const weatherResponse = await fetch(
+                `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code,wind_speed_10m&temperature_unit=celsius`
+            );
+            const weatherData = await weatherResponse.json();
+
+            if (!weatherData.current) {
+                weatherDisplay.innerHTML = '<p style="color: #fff;">Weather data unavailable</p>';
+                return;
+            }
+
+            const { temperature_2m, wind_speed_10m } = weatherData.current;
+            const weatherIcon = getWeatherIcon(weatherData.current.weather_code);
+            const weatherDescription = getWeatherDescription(weatherData.current.weather_code);
+
+            weatherDisplay.innerHTML = `
+                <div class="weather-info">
+                    <span class="weather-icon">${weatherIcon}</span>
+                    <div style="text-align: left;">
+                        <strong>${name}, ${country}</strong>
+                        <div>${temperature_2m}°C | ${weatherDescription}</div>
+                        <small>Wind: ${wind_speed_10m} km/h</small>
+                    </div>
+                </div>
+            `;
+        } catch (error) {
+            console.error('Weather API Error:', error);
+            weatherDisplay.innerHTML = '<p style="color: #fff;">Error fetching weather</p>';
+        }
+    });
+
+    function getWeatherDescription(code) {
+        const descriptionMap = {
+            0: 'Clear sky',
+            1: 'Mainly clear',
+            2: 'Partly cloudy',
+            3: 'Overcast',
+            45: 'Foggy',
+            48: 'Depositing rime fog',
+            51: 'Light drizzle',
+            53: 'Moderate drizzle',
+            55: 'Dense drizzle',
+            61: 'Slight rain',
+            63: 'Moderate rain',
+            65: 'Heavy rain',
+            71: 'Slight snow',
+            73: 'Moderate snow',
+            75: 'Heavy snow',
+            77: 'Snow grains',
+            80: 'Slight rain showers',
+            81: 'Moderate rain showers',
+            82: 'Violent rain showers',
+            85: 'Slight snow showers',
+            86: 'Heavy snow showers',
+            95: 'Thunderstorm',
+            96: 'Thunderstorm with hail',
+            99: 'Thunderstorm with heavy hail'
+        };
+        return descriptionMap[code] || 'Unknown';
+    }
+
+    function getWeatherIcon(code) {
+        const iconMap = {
+            0: '☀️',
+            1: '🌤️',
+            2: '⛅',
+            3: '☁️',
+            45: '🌫️',
+            48: '🌫️',
+            51: '🌧️',
+            53: '🌧️',
+            55: '🌧️',
+            61: '🌧️',
+            63: '⛈️',
+            65: '⛈️',
+            71: '❄️',
+            73: '❄️',
+            75: '❄️',
+            77: '❄️',
+            80: '🌧️',
+            81: '⛈️',
+            82: '⛈️',
+            85: '❄️',
+            86: '❄️',
+            95: '⛈️',
+            96: '⛈️',
+            99: '⛈️'
+        };
+        return iconMap[code] || '🌡️';
+    }
+</script>
+
 </body>
 <footer class="footer">
     <div class="container">

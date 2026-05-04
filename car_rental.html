@@ -391,6 +391,52 @@
             padding: 2px 6px;
             font-size: 0.7rem;
         }
+
+        /* Checkout Modal Styles */
+        #checkout-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .checkout-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .checkout-item {
+            border-bottom: 1px solid #eee;
+            padding: 1rem 0;
+        }
+
+        .checkout-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1000;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -398,20 +444,21 @@
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#"><img src="logo.png" alt="WanderWave Logo"> WanderWave</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#carouselExampleCaptions">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#cars">Car Rental</a></li>
                     <li class="nav-item"><a class="nav-link" href="#bikes">Bike Rental</a></li>
                     <li class="nav-item"><a class="nav-link" href="#booking">Book Now</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="cart-icon">
-                            <i class="fas fa-shopping-cart"></i>
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
                             <span id="cart-count" style="display: none;">0</span>
+                            <span class="sr-only">Shopping Cart</span>
                         </a>
                     </li>
                 </ul>
@@ -427,6 +474,7 @@
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner">
+            
             <div class="carousel-item active" style="background-image: url('https://images.pexels.com/photos/3989923/pexels-photo-3989923.jpeg?auto=compress&cs=tinysrgb&w=800')">
                 <div class="carousel-caption">
                     <h5>Find Your Perfect Ride</h5>
@@ -564,9 +612,9 @@
                                     Select Model
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="cityBikeDropdown">
-                                    <li><a class="dropdown-item" href="#">Honda CB Shine</a></li>
-                                    <li><a class="dropdown-item" href="#">Bajaj Pulsar 125</a></li>
+                                    <li><a class="dropdown-item" href="#">2000cc David Puttar</a></li>
                                     <li><a class="dropdown-item" href="#">TVS Apache RTR 160</a></li>
+                                    <li><a class="dropdown-item" href="#">Royal Enfield Meteor 350</a></li>
                                 </ul>
                             </div>
                             <a href="#" class="btn btn-primary rent-now" data-price="30">Rent Now</a>
@@ -611,42 +659,40 @@
     </section>
 
     <!-- Booking Form Section -->
-    <section id="booking" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-4">Book Your Ride</h2>
-            <form>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label for="pickupDate" class="form-label">Pickup Date</label>
-                        <input type="date" class="form-control" id="pickupDate" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="returnDate" class="form-label">Return Date</label>
-                        <input type="date" class="form-control" id="returnDate" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="vehicleType" class="form-label">Vehicle Type</label>
-                        <select class="form-select" id="vehicleType" required>
-                            <option value="">Choose...</option>
-                            <option>Car - Off-road</option>
-                            <option>Car - Luxury</option>
-                            <option>Car - Economy</option>
-                            <option>Bike - Mountain</option>
-                            <option>Bike - City</option>
-                            <option>Bike - Electric</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="location" class="form-label">Pickup Location</label>
-                        <input type="text" class="form-control" id="location" placeholder="Enter city" required>
-                    </div>
-                    <div class="col-12">
-                        <center><button type="submit" class="btn btn-primary">Book Now</button></center>
-                    </div>
+<section id="booking" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Book Your Ride</h2>
+        <form id="booking-form">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="pickupDate" class="form-label">Pickup Date</label>
+                    <input type="date" class="form-control" id="pickupDate" name="pickupDate" required>
                 </div>
-            </form>
-        </div>
-    </section>
+                <div class="col-md-6">
+                    <label for="returnDate" class="form-label">Return Date</label>
+                    <input type="date" class="form-control" id="returnDate" name="returnDate" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="timeSlot" class="form-label">Time Slot</label>
+                    <select class="form-select" id="timeSlot" name="timeSlot" required>
+                        <option value="">Choose...</option>
+                        <option value="Early Morning">Early Morning (12:00 a.m - 9:00 a.m)</option>
+                        <option value="Morning">Morning (9:00 a.m - 12:00 p.m)</option>
+                        <option value="Afternoon">Afternoon (12:00 p.m - 3:00 p.m)</option>
+                        <option value="Evening">Evening (3:00 p.m - 6:00 p.m)</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="location" class="form-label" id="input">Pickup Location</label>
+                    <input type="text" class="form-control" id="location" name="location" placeholder="Enter Complete Address" required>
+                </div>
+                <div class="col-12">
+                    <center><button type="submit" class="btn btn-primary">Book Now</button></center>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -654,11 +700,11 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>Company</h4>
-                    <a href="">About Us</a>
-                    <a href="">Contact Us</a>
-                    <a href="">Privacy Policy</a>
-                    <a href="">Terms & Condition</a>
-                    <a href="">FAQs & Help</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms & Condition</a>
+                    <a href="#">FAQs & Help</a>
                 </div>
                 <div class="footer-section">
                     <h4>Contact</h4>
@@ -666,10 +712,10 @@
                     <p>0001000169</p>
                     <p>WanderWave@gmail.com</p>
                     <div class="social-links">
-                        <a href=""><i class="fab fa-twitter"></i></a>
-                        <a href=""><i class="fab fa-facebook-f"></i></a>
-                        <a href=""><i class="fab fa-youtube"></i></a>
-                        <a href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <div class="footer-section">
@@ -686,14 +732,15 @@
                 <div class="footer-section-newsletter">
                     <h4>Newsletter</h4>
                     <p>Sign up for our newsletter to get the latest updates.</p>
-                    <form>
-                        <input type="email" placeholder="Your email" style="width: 100%; padding: 10px; margin-top: 10px;">
+                    <form id="newsletter-form">
+                        <input id="newsletter-input" type="email" placeholder="Your email" style="width: 100%; padding: 10px; margin-top: 10px;">
                         <button type="submit" style="width: 100%; padding: 10px; margin-top: 10px; background-color: #28ac97; color: #FFFFFF; border: none; cursor: pointer;">Subscribe</button>
                     </form>
                 </div>
             </div>
         </div>
     </footer>
+
     <!-- Cart Modal -->
     <div id="cart-modal" class="modal">
         <div class="cart-content">
@@ -705,8 +752,28 @@
         </div>
     </div>
 
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal">
+        <div class="checkout-content">
+            <h2>Checkout <span class="close-checkout">&times;</span></h2>
+            <div class="invoice-header">
+                <img src="logo.png" alt="WanderWave Logo" class="invoice-logo">
+                <h3>WanderWave Rental Invoice</h3>
+            </div>
+            <div id="checkout-items"></div>
+            <div id="checkout-summary"></div>
+            <div id="checkout-total"></div>
+            <button id="confirm-order-btn" class="btn btn-primary">Confirm Order</button>
+            <button id="download-invoice-btn" class="btn btn-secondary">Download Invoice</button>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         // Cart functionality
         let cart = [];
@@ -718,13 +785,24 @@
         const checkoutBtn = document.getElementById('checkout-btn');
         const closeBtn = document.querySelector('.close');
 
+        // Checkout functionality
+        const checkoutModal = document.getElementById('checkout-modal');
+        const closeCheckoutBtn = document.querySelector('.close-checkout');
+        const confirmOrderBtn = document.getElementById('confirm-order-btn');
+        const downloadInvoiceBtn = document.getElementById('download-invoice-btn');
+        const checkoutItems = document.getElementById('checkout-items');
+        const checkoutTotal = document.getElementById('checkout-total');
+
+        // Notification
+        const notification = document.getElementById('notification');
+
         document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            const dropdownButton = e.target.closest('.dropdown').querySelector('.dropdown-toggle');
-            dropdownButton.textContent = e.target.textContent;
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const dropdownButton = e.target.closest('.dropdown').querySelector('.dropdown-toggle');
+                dropdownButton.textContent = e.target.textContent;
+            });
         });
-    });
 
         // Add to cart
         document.querySelectorAll('.rent-now').forEach(button => {
@@ -737,8 +815,14 @@
                 const price = parseFloat(e.target.dataset.price);
                 const model = card.querySelector('.dropdown-toggle').textContent.trim();
 
+                if (model === 'Select Model') {
+                    showNotification('Please select a model before adding to cart.', 'error');
+                    return;
+                }
+
                 addToCart(id, type, name, price, model);
                 updateCartIcon();
+                showNotification('Item added to cart!', 'success');
             });
         });
 
@@ -755,6 +839,15 @@
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             cartCount.textContent = totalItems;
             cartCount.style.display = totalItems > 0 ? 'inline' : 'none';
+        }
+
+        function showNotification(message, type = 'success') {
+            notification.textContent = message;
+            notification.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         }
 
         // Open cart modal
@@ -794,7 +887,7 @@
                 cartItems.appendChild(itemElement);
             });
 
-            cartTotal.textContent = Total: $${total.toFixed(2)};
+            cartTotal.textContent = `Total: $${total.toFixed(2)}`;
 
             // Add event listeners to remove buttons
             document.querySelectorAll('.remove-item').forEach(button => {
@@ -805,30 +898,170 @@
         function removeFromCart(e) {
             const id = e.target.dataset.id;
             const model = e.target.dataset.model;
-            cart = cart.filter(item => !(item.id === id && item.model === model));
-            updateCartModal();
-            updateCartIcon();
+            const itemIndex = cart.findIndex(item => item.id === id && item.model === model);
+            
+            if (itemIndex !== -1) {
+                if (cart[itemIndex].quantity > 1) {
+                    cart[itemIndex].quantity--;
+                } else {
+                    cart.splice(itemIndex, 1);
+                }
+                updateCartModal();
+                updateCartIcon();
+                showNotification('Item removed from cart!', 'success');
+            }
         }
 
-        // Checkout functionality
+        // Open checkout modal
         checkoutBtn.addEventListener('click', () => {
             if (cart.length === 0) {
-                alert('Your cart is empty!');
+                showNotification('Your cart is empty!', 'error');
+                return;
+            }
+            updateCheckoutModal();
+            cartModal.style.display = 'none';
+            checkoutModal.style.display = 'flex';
+        });
+
+        // Close checkout modal
+        closeCheckoutBtn.addEventListener('click', () => {
+            checkoutModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === checkoutModal) {
+                checkoutModal.style.display = 'none';
+            }
+        });
+
+        function updateCheckoutModal() {
+            checkoutItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('checkout-item');
+                itemElement.innerHTML = `
+                    <h4>${item.name} (${item.model})</h4>
+                    <p>Price: $${item.price.toFixed(2)} x ${item.quantity}</p>
+                    <p>Total: $${itemTotal.toFixed(2)}</p>
+                `;
+                checkoutItems.appendChild(itemElement);
+            });
+
+            checkoutTotal.textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        // Confirm order
+        confirmOrderBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!', 'error');
                 return;
             }
             
-            // Here you would typically send the cart data to a server
+            // Here you would typically send the order data to a server
             // For this example, we'll just log it and clear the cart
-            console.log('Checkout:', cart);
-            alert('Thank you for your order!');
+            console.log('Order confirmed:', cart);
+            showNotification('Thank you for your order!', 'success');
             cart = [];
-            updateCartModal();
             updateCartIcon();
-            cartModal.style.display = 'none';
+            checkoutModal.style.display = 'none';
+        });
+
+        // Download invoice
+        downloadInvoiceBtn.addEventListener('click', () => {
+            // Generate PDF invoice
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(22);
+            doc.text('WanderWave Rental Invoice', 20, 20);
+
+            doc.setFontSize(12);
+            let yPos = 40;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                doc.text(`${item.name} (${item.model})`, 20, yPos);
+                doc.text(`$${item.price.toFixed(2)} x ${item.quantity}`, 120, yPos);
+                doc.text(`$${itemTotal.toFixed(2)}`, 170, yPos);
+                yPos += 10;
+            });
+
+            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            yPos += 10;
+            doc.setFontSize(16);
+            doc.text(`Total: $${total.toFixed(2)}`, 150, yPos);
+
+            doc.save('WanderWave_Invoice.pdf');
+            showNotification('Invoice downloaded successfully!', 'success');
+        });
+
+        // Booking form submission
+        const bookingForm = document.getElementById('booking-form');
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Here you would typically send the booking data to a server
+            // For this example, we'll just show a notification
+            showNotification('Booking submitted successfully!', 'success');
+            bookingForm.reset();
+        });
+
+        // Newsletter form submission
+        const newsletterForm = document.getElementById('newsletter-form');
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Here you would typically send the email to a server for newsletter subscription
+            // For this example, we'll just show a notification
+            showNotification('Thank you for subscribing to our newsletter!', 'success');
+            newsletterForm.reset();
         });
 
         // Initialize cart icon
         updateCartIcon();
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            // Redirect to the payment page
+            window.location.href = 'payment.html';
+        });
+    
+// Function to handle form submission
+document.getElementById('booking-form').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    
+    const pickupDate = document.getElementById('pickupDate').value;
+    const returnDate = document.getElementById('returnDate').value;
+    const timeSlot = document.getElementById('timeSlot').value;
+    const location = document.getElementById('location').value;
+
+    // Create an object to hold the booking data
+    let bookingData = {
+        pickupDate: pickupDate,
+        returnDate: returnDate,
+        timeSlot: timeSlot,
+        location: location
+    };
+
+    // Save booking data to localStorage
+    let bookingDataString = JSON.stringify(bookingData);
+    localStorage.setItem('bookingData', bookingDataString);
+
+    // Optional: Log the saved data to the console
+    console.log('Booking details saved:', bookingDataString);
+
+    // Optionally, show an alert with the booking details
+    alert(`Booking details saved:
+        Pickup Date: ${pickupDate}
+        Return Date: ${returnDate}
+        Time Slot: ${timeSlot}
+        Location: ${location}`);
+    
+    // Reset the form
+    document.getElementById('booking-form').reset();
+});
     </script>
+
 </body>
 </html>
